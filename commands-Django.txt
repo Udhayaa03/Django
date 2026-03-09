@@ -1,0 +1,45 @@
+
+<!----- To Display Alert Messages ------!>
+
+
+
+{% for message in messages %}
+
+<div class= "alert alert- {{message.tags}} alert-dismissable fade show" role="alert">
+	<strong>{{message}} </strong>
+	<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+
+</div>
+
+{% endfor %}
+
+
+
+
+
+
+<!------  ------!>
+
+try:
+	if User.objects.get(username= email):
+		messages.info(request,"Email is Taken")
+		return render(request,'signup.html')
+
+except Exception as identifiers:
+	pass
+
+user=User.objects.create user(email,email,password)
+
+user.fname=fname
+user.lname=lname
+user.is_active = False
+user.save()
+
+email_subject=f"Activate your Account {fname}"
+message=render_to_string('activate.html',{
+	'user':user,
+	'domain': '127.0.0.1:8000',
+	'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+	'token': generate_token.make_token(user)
+
+})
